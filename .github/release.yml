@@ -1,0 +1,23 @@
+changelog:
+  exclude:
+    labels:
+      - documentation
+  categories:
+    - title: ⚠ Breaking Changes
+      labels:
+        - breaking-change
+    - title: Features
+      labels:
+        - feature
+    - title: Bug Fixes
+      labels:
+        - bug
+    - title: Dependencies
+      labels:
+        - dependencies
+    - title: 🐛 Sub-bugs
+      labels:
+        - subbug
+    - title: Other Changes
+      labels:
+        - '*'

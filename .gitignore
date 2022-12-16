@@ -1,0 +1,20 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+!.idea/codeStyleSettings.xml
+!.idea/codeStyles
+!.idea/runConfigurations/*
+
+### VS Code ###
+.vscode/
+
+### MVN ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+
