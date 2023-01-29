@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 const val TEST_DESCRIPTION =  "Nice stuff"
 const val TEST_ID =  "42"
 
-internal class TaskKtTest {
+internal class TaskTest {
 
     @Test
     fun `minimal task`() {

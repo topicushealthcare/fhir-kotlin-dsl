@@ -6,7 +6,7 @@ import org.hl7.fhir.r4.model.Reference
 /**
  * Resource Reference.
  *
- * **See Also:** [hl7.org documentation](https://www.hl7.org/fhir/references.html#Reference)
+ * **See Also:** [hl7.org documentation](http://hl7.org/fhir/R4B/references.html#Reference)
  */
 fun reference(referenceBuilder: ReferenceBuilder.() -> Unit): Reference
 {
