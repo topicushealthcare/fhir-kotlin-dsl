@@ -1,0 +1,44 @@
+name: Master builder
+run-name: ${{ github.actor }} is pushing ${{ github.event.head_commit.message }} to main
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-master:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: ⚙ Checkout branch
+        uses: actions/checkout@v3
+      - name: 🛈 Get commit message
+        id: get-commit-message
+        run: echo "COMMIT_MESSAGE=`git show -s --format=%s`" >>  $GITHUB_OUTPUT
+      - name: ⚙ Install java and restore maven cache
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: 💾 Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: ⚙ Build master and sonarcloud
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: >
+          mvn -U 
+          -Drevision=${{ github.sha }} 
+          clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar
+      - name: 🗸 Sonar quality gate check
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          scanMetadataReportFile: target/sonar/report-task.txt
