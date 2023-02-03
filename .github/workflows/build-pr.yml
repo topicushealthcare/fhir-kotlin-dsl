@@ -1,0 +1,38 @@
+name: PR Builder
+run-name: ${{ github.actor }} is building ${{github.head_ref}} to merge into ${{github.base_ref}}; build ${{github.run_number}}
+
+on:
+  pull_request:
+
+jobs:
+  pr-merge-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: ⚙ Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: 💾 Install java and restore maven cache
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: 💾 Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: ⚙ Build with sonarcloud
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: >
+          mvn -U 
+          -Dsonar.pullrequest.base=${{ github.base_ref }}
+          -Dsonar.pullrequest.branch=${{ github.head_ref }}
+          -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+          --no-transfer-progress
+          clean license:add-third-party org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar         
