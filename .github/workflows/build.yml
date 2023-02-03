@@ -30,7 +30,7 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
       - name: ⚙ Build master and sonarcloud
         env:
-          SONAR_TOKEN: ${{ secrets.ORG_SONAR_ANALYSIS_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: >
           mvn -U 
           -Drevision=${{ github.sha }} 
@@ -39,6 +39,6 @@ jobs:
         uses: sonarsource/sonarqube-quality-gate-action@master
         timeout-minutes: 5
         env:
-          SONAR_TOKEN: ${{ secrets.ORG_SONAR_ANALYSIS_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           scanMetadataReportFile: target/sonar/report-task.txt
