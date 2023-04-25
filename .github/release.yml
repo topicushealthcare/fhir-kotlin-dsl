@@ -15,9 +15,6 @@ changelog:
     - title: Dependencies
       labels:
         - dependencies
-    - title: 🐛 Sub-bugs
-      labels:
-        - subbug
     - title: Other Changes
       labels:
         - '*'
