@@ -19,7 +19,7 @@
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
 
-        <hapi.version>6.8.2</hapi.version>
+        <hapi.version>6.10.1</hapi.version>
 
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.organization>topicushealthcare</sonar.organization>
